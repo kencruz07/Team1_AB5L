@@ -1,35 +1,47 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * Administrator Model
+ *
+ * @package	icsls
+ * @category Model	
+ * @author	CMSC 128 AB-5L Team 1
+ */
 
 class Administrator_model extends CI_Model{
 
-	/* Parameters:
-		a. $orderBases - Column sorting order
-		Description: Returns the query result containing all users
-		Return value: Array of information containing the result of the query
-	*/
-	public function get_all_accounts($orderBasis){
+	/**
+	 * Gets all the accounts sorted based on a specific criteria
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	array
+	 */
+	public function get_all_accounts($orderBasis)
+	{
 		return $this->db->query("SELECT * FROM users ORDER BY $orderBasis");
 	}
 
-	/* Parameters:
-		a. $orderBases - Column sorting order
-		b. $limit - Limit of the result
-		c. $offset - Starting point
-		Description: Returns the query result containing all users but limited for pagination
-		Return value: Array of information containing the result of the query
-	*/
-	public function get_all_limited_accounts($orderBasis, $limit, $offset){
-		// $this->db->order_by($orderBasis);
+	/**
+	 * Gets limited number of accounts sorted based on a specific criteria, limit and offset
+	 *
+	 * @access	public
+	 * @param	string, integer, integer
+	 * @return	array
+	 */
+	public function get_all_limited_accounts($orderBasis, $limit, $offset)
+	{
 		return $this->db->query("SELECT * FROM users ORDER BY $orderBasis ASC LIMIT $limit OFFSET $offset");
 	}
 
-	/* Parameters:
-		a. $searchCategory - Column name to be checked
-		b. $searchText - User input to be search
-		Description: Returns all account information of the matching user/s
-		Return value: Array of information containing the result of the query
-	*/
-	public function get_search_accounts($searchCategory, $searchText){
+	/**
+	 * Gets the accounts matching the search criteria
+	 *
+	 * @access	public
+	 * @param	string, string
+	 * @return	array
+	 */
+	public function get_search_accounts($searchCategory, $searchText)
+	{
 		if($searchCategory == "username"){
 			return $this->db->query("SELECT * FROM users WHERE username='$searchText'");
 		}else if($searchCategory == "student_number"){
@@ -43,16 +55,15 @@ class Administrator_model extends CI_Model{
 		}
 	}
 
-	/* Parameters:
-		a. $searchCategory - Column name to be checked
-		b. $searchText - User input to be search
-		c. $orderBasis - Column basis for sorting
-		d. $limit - Result count limit
-		e. $offset - Number of items to skip
-		Description: Returns limited account information of the matching user/s
-		Return value: Array of information containing the result of the query
-	*/
-	public function get_limited_search_accounts($searchCategory, $searchText, $orderBasis, $limit, $offset){
+	/**
+	 * Gets limited number of accounts matching the search criteria based on search criteria and offset
+	 *
+	 * @access	public
+	 * @param	string, string, string, integer, integer
+	 * @return	array
+	 */
+	public function get_limited_search_accounts($searchCategory, $searchText, $orderBasis, $limit, $offset)
+	{
 		$this->db->query("SELECT * FROM users ORDER BY $orderBasis ASC");
 
 		if($searchCategory == "username"){
@@ -68,14 +79,15 @@ class Administrator_model extends CI_Model{
 		}
 	}
 
-	/* Parameters:
-		a. $searchCategory - Column name to be checked
-		b. $searchText - User input to be search
-		c. $orderBasis - Column as basis for sorting
-		Description: Returns all account information sorted based on category
-		Return value: Array of information containing the result of the query
-	*/
-	public function get_sorted_search_accounts($searchCategory, $searchText, $orderBasis){
+	/**
+	 * Gets all accounts based on search criteria sorted in specified order
+	 *
+	 * @access	public
+	 * @param	string, string, string
+	 * @return	array
+	 */
+	public function get_sorted_search_accounts($searchCategory, $searchText, $orderBasis)
+	{
 		if($searchCategory == "username"){
 			return $this->db->query("SELECT * FROM users WHERE username='$searchText' ORDER BY $orderBasis ASC");
 		}else if($searchCategory == "student_number"){
@@ -89,16 +101,15 @@ class Administrator_model extends CI_Model{
 		}
 	}
 
-	/* Parameters:
-		a. $searchCategory - Column name to be checked
-		b. $searchText - User input to be search
-		c. $orderBasis - Column as basis for sorting
-		d. $limit - Limit of the result
-		e. $offset - Starting point
-		Description: Returns account information based on search text, category sorted based on category but limited for pagination
-		Return value: Array of information containing the result of the query
-	*/
-	public function get_limited_sorted_search_accounts($searchCategory, $searchText, $orderBasis, $limit, $offset){
+	/**
+	 * Gets limited number of accounts based on search criteria and offset sorted in specified order
+	 *
+	 * @access	public
+	 * @param	string, string, string, integer, integer
+	 * @return	array
+	 */
+	public function get_limited_sorted_search_accounts($searchCategory, $searchText, $orderBasis, $limit, $offset)
+	{
 		$this->db->query("SELECT * FROM users ORDER BY $orderBasis ASC");
 
 		if($searchCategory == "username"){
