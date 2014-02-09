@@ -131,9 +131,20 @@ class Administrator extends CI_Controller{
 		$this->load->view("view_accounts_view", $data);
 	}
 	
-	public function create_account(){	
-		//Erika Kimhoko, January 29,2014 , call this function to invoke create account function
+	
+	/*
+		Changelog for create_accounts()
+		//create_accounts function is for the admin to add account of a admin and librarian
 		
+		1/29
+		-Deleted insert_account function merging it to create_accounts function because of redundancy 
+		-isset function used to check the set fields to know which view to invoke
+		
+	*/
+	
+	//Erika Kimhoko
+	public function create_account(){	
+	
 		if(isset($_POST['submit'])){
 			$employee_no = $_POST["employee_no"];
 			$last_name = $_POST["last_name"];

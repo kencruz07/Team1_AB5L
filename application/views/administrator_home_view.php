@@ -1,3 +1,8 @@
+<!--
+The Administrator home view 
+Where the administrator will be redirected after creating an account of another adminstrator or admin
+-->
+
 <?=$this->load->view('includes/header')?>
 
 	<?php if(isset($notification_message)){echo '<script> alert("You successfully created the account") </script>';} ?>

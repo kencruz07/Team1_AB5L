@@ -133,8 +133,17 @@ class Administrator_model extends CI_Model{
         }
 	}
 	
-	//Erika C. Kimhoko, January 29,2014, insert data to the database
-	//function to insert in the database
+	
+	
+	/* Parameters:
+		a. $employee_no , $last_name , $first_name , $middle_name , $user_type , $username , $password , $college_address , $email_address , $contact -
+			values of the user to be inserted in to the database	
+	
+		Description: Function which inserts the user details in to the database
+		Return value: 1 if successfully inserted the account else 0
+		Created by: Erika Kimhoko, January 29, 2014
+	*/
+
 	public function insert_account( $employee_no , $last_name, $first_name , $middle_name,
 			$user_type , $username, $password, $college_address, $email_address ,$contact ){
 		
@@ -152,7 +161,6 @@ class Administrator_model extends CI_Model{
 			}
 			else{
 				return 0;
-				// if there are the same values (email or password or username)
 			}
 	}
 	
