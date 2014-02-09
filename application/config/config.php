@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/icsls/';
+$config['base_url']	= 'http://localhost/Team1_AB5L/';
 
 /*
 |--------------------------------------------------------------------------
