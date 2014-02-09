@@ -10,15 +10,15 @@
 class Administrator_model extends CI_Model{
 
 	/**
-	 * Gets all the accounts sorted based on a specific criteria
+	 * Counts the total number of existing accounts
 	 *
 	 * @access	public
-	 * @param	string
-	 * @return	array
+	 * @param	none
+	 * @return	integer
 	 */
-	public function get_all_accounts($orderBasis)
+	public function get_total_accounts()
 	{
-		return $this->db->query("SELECT * FROM users ORDER BY $orderBasis");
+		return $this->db->count_all('users');
 	}
 
 	/**
@@ -34,24 +34,24 @@ class Administrator_model extends CI_Model{
 	}
 
 	/**
-	 * Gets the accounts matching the search criteria
+	 * Counts the number of accounts matching the search criteria
 	 *
 	 * @access	public
 	 * @param	string, string
 	 * @return	array
 	 */
-	public function get_search_accounts($searchCategory, $searchText)
+	public function get_search_accounts_count($searchCategory, $searchText)
 	{
 		if($searchCategory == "username"){
-			return $this->db->query("SELECT * FROM users WHERE username='$searchText'");
+			return $this->db->query("SELECT username FROM users WHERE username='$searchText'")->num_rows();
 		}else if($searchCategory == "student_number"){
-			return $this->db->query("SELECT * FROM users WHERE student_number='$searchText'");
+			return $this->db->query("SELECT username FROM users WHERE student_number='$searchText'")->num_rows();
 		}else if($searchCategory == "employee_number"){
-			return $this->db->query("SELECT * FROM users WHERE employee_number='$searchText'");
+			return $this->db->query("SELECT username FROM users WHERE employee_number='$searchText'")->num_rows();
 		}else if($searchCategory == "first_name"){
-			return $this->db->query("SELECT * FROM users WHERE first_name='$searchText'");
+			return $this->db->query("SELECT username FROM users WHERE first_name='$searchText'")->num_rows();
 		}else if($searchCategory == "last_name"){
-			return $this->db->query("SELECT * FROM users WHERE last_name='$searchText'");
+			return $this->db->query("SELECT username FROM users WHERE last_name='$searchText'")->num_rows();
 		}
 	}
 
