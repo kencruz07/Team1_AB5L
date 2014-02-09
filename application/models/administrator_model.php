@@ -196,6 +196,7 @@ class Administrator_model extends CI_Model{
 
 	}
 	
+	//Check if the user exists in the database
 	public function user_exists($username){
 		$userCount = $this->db->query("SELECT * FROM users WHERE username='$username'")->num_rows();
 
