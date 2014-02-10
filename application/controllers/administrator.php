@@ -72,27 +72,26 @@ class Administrator extends CI_Controller{
 		
 		$this->load->view('view_accounts_view', $data);		
 	}
-	/*
-		Changelog for delete_accounts()
-		1/27
-		-Checks if the POST variable 'users' is set, if TRUE, calls delete_accounts method.
-		-Parameters of delete_account call is $users, the array containing the users to be deleted.
-		1/28
-		-Deleted delete_accounts method in administrator controller (redundancy)
-		-Action if $users is set is now the previous action of delete_accounts method
-		2/5
-		-Restored delete_accounts()
-		-Instead of deleting in view_accounts(), will now call view_accounts() from delete_accounts() instead.
-		-Redirected to view_accounts() first, to remove .../delete_accounts url, then calls view_accounts().
-	*/
+	
+	/**
+	 * Controller to get selected user/s to be deleted
+	 *
+	 * @access	public
+	 * @param	none
+	 * @return	none
+	 */	
 	public function delete_accounts(){
+		//Gets the post value of the 'users' checkbox
+		//$users contains the array of users that has been checked to be deleted
 		$users = $this->input->post('users');
 		
+		//Checks if $users has a value. If true, accesses from the administrator_model the delete_accounts function, with $users as parameter
 		if($users){			
 			$this->administrator_model->delete_accounts($users);	
 		}
+		
+		//After deleting account/s, it redirects to view_accounts() method.
 		redirect('administrator/view_accounts');
-		//$this->view_accounts();
 	}
 
 	public function search_accounts(){

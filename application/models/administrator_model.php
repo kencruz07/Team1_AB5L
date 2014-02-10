@@ -76,26 +76,19 @@ class Administrator_model extends CI_Model{
 		return $this->db->get();
 	}
 	
-	/*
-		Changelog for delete_accounts method
-		1/28
-		-Created delete_accounts method to be used for the Delete Users module.
-		-delete_accounts method accesses the database and deletes rows depending on $users array.
-		-Parameters of delete_account call is $users, the array containing the users to be deleted.
-		-In the foreach loop, it checks individually (per row, or per user) if it is a student or employee.
-		-It compares the value of the checkbox. If value has a '-' in $value[4] (e.g. ****-*****), it deletes a row where student_number == $value. Else if it has no '-', deletes a row where employee_number == $value
-		2/5
-		-Used username column instead.
-	*/
-	
+	/**
+	 * Deletes selected account/s
+	 *
+	 * @access	public
+	 * @param	none
+	 * @return	none
+	 */	
 	public function delete_accounts($users){
 		foreach($users as $value)
         {
 			$this->db->delete('users', array('username' => $value));
         }
-	}
-	
-	
+	}	
 	
 	/* Parameters:
 		a. $employee_no , $last_name , $first_name , $middle_name , $user_type , $username , $password , $college_address , $email_address , $contact -
