@@ -10,7 +10,7 @@
 				foreach ($account as $row){
 				}
 			?>
-				ID : <?php echo $row->id; ?> <br/>
+				<!--Removed showing row id-->
 				Employee No: <input type='text' name='employee_no' pattern="[0-9]{9}" value="<?php echo $row->employee_number; ?>" /> <br/>
 				Student Number: <input type='text' name='stud_no' pattern="[\-0-9]{10}" value='<?php echo $row->student_number; ?>' /><br/>
 				Last name: <input type='text' name='last_name' pattern="[A-Za-z]{1,35}" value='<?php echo $row->last_name; ?>' required/><br/>
