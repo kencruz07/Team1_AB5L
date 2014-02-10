@@ -72,7 +72,8 @@
 					<tr>
 						<!-- Creates a checkbox which when checked, will be passed to the controller and model to delete the checked row. Value will vary depending on the account type (Employee/Student). -->
 						<!--Changelog: 2/5 -Used username as value instead.-->
-						<td><input type='checkbox' name='users[]' value="<?=$account->username?>"/></td>
+						<!--Changelog: 2/10 -Used row id (id) as value instead.-->
+						<td><input type='checkbox' name='users[]' value="<?=$account->id?>"/></td>
 						<td><?=$i++ + $offset?></td>
 						<td><?=($account->employee_number != NULL ? $account->employee_number : "--")?>
 						</td>
@@ -94,9 +95,10 @@
 							?>
 						</td>
 						<td>
-							<?=anchor('administrator/view_user_profile/'.$account->username, 'View Profile')?>
+							<!--Changelog: 2/10 -Used row id (id) for both view and edit account-->
+							<?=anchor('administrator/view_user_profile/'.$account->id, 'View Profile')?>
 							<!--Changelog: 2/5 -Added a Edit Account button for edit_account() method-->
-							<?=anchor('administrator/edit_account/'.$account->username, 'Edit Account')?>
+							<?=anchor('administrator/edit_account/'.$account->id, 'Edit Account')?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

@@ -30,7 +30,7 @@ class Administrator_model extends CI_Model{
 	 */
 	public function get_all_limited_accounts($orderBasis, $limit, $offset)
 	{
-		$this->db->select(array('employee_number', 'student_number', 'username', 'last_name', 
+		$this->db->select(array('id', 'employee_number', 'student_number', 'username', 'last_name', 
 				 		 		'first_name', 'middle_name', 'user_type')
 						 )
 				 ->from('users')
@@ -86,7 +86,7 @@ class Administrator_model extends CI_Model{
 	public function delete_accounts($users){
 		foreach($users as $value)
         {
-			$this->db->delete('users', array('username' => $value));
+			$this->db->delete('users', array('id' => $value));
         }
 	}	
 	
@@ -119,14 +119,17 @@ class Administrator_model extends CI_Model{
 			}
 	}
 	
-	public function get_profile($username){ //returns the profile of the chosen user
-		$query=$this->db->query("SELECT * FROM users WHERE username='$username'");
+	public function get_profile($id){ //returns the profile of the chosen user
+		//****MODIFIED CODE: Used ID instead of USERNAME
+		$query=$this->db->query("SELECT * FROM users WHERE id='$id'");
 		return $query->result();
 	}
 	
 	//	ZKA MALABUYOC
-	public function get_existing_account($uname){ // selects and returns user info with username = $uname
-		 $userInfo = $this->db->query("SELECT * FROM users WHERE username = '$uname'");
+	public function get_existing_account($id){ // selects and returns user info with username = $uname
+		 //****MODIFIED CODE: Used ID instead of USERNAME
+		 //$userInfo = $this->db->query("SELECT * FROM users WHERE username = '$uname'");
+		 $userInfo = $this->db->query("SELECT * FROM users WHERE id = '$id'");
 
 		 foreach ($userInfo->result() as $item){
 		 	// store in array data all existing user info
@@ -164,8 +167,9 @@ class Administrator_model extends CI_Model{
 		Description: Checks if the user is registered
 		Return value: Boolean value if the user exists or not
 	*/
-	public function user_exists($username){
-		$userCount = $this->db->query("SELECT * FROM users WHERE username='$username'")->num_rows();
+	public function user_exists($id){
+		//****MODIFIED CODE: Used ID instead of USERNAME
+		$userCount = $this->db->query("SELECT * FROM users WHERE id='$id'")->num_rows();
 
 		return ($userCount == 1 ? true : false);
 	}

@@ -209,20 +209,26 @@ class Administrator extends CI_Controller{
 		$data["title"]	= "Edit Account - ICS Library System";
 
 		// gets username of account to be edited through the URI
-		$uname = $this->uri->segment(3);
+		//$uname = $this->uri->segment(3);
+		
+		//****MODIFIED CODE: Used ID instead of USERNAME
+		$id = $this->uri->segment(3);
 
 		// PARAMETER: $uname
 		// array $data contains result of query from administrator_model
-		$data['account'] = $this->administrator_model->get_existing_account($uname);
+		//$data['account'] = $this->administrator_model->get_existing_account($uname);
+		
+		$data['account'] = $this->administrator_model->get_existing_account($id);
 
 		$this->load->view("edit_accounts_view", $data);
 		
 	}
 	
-	public function view_user_profile($username){//function for viewing a user profile
+	public function view_user_profile($id){//function for viewing a user profile
+		//****MODIFIED CODE: Used ID instead of USERNAME
 		$this->load->model('administrator_model');	//load administrator model
-		if($this->administrator_model->user_exists($username)==1){//if user exists(assuming the admin messes up with the url)
-			$data['results']=$this->administrator_model->get_profile($username); //creates a data array that accepts the return value of getProfile
+		if($this->administrator_model->user_exists($id)==1){//if user exists(assuming the admin messes up with the url)
+			$data['results']=$this->administrator_model->get_profile($id); //creates a data array that accepts the return value of getProfile
 																				// function of administrator model
 			$this->load->view('user_profile_view',$data); //load the user_profile view
 		}
