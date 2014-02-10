@@ -1,10 +1,11 @@
+<!-- View Accounts Page -->
+
 <?=$this->load->view('includes/header')?>
-	<!--if(isset($notification_message)){echo '<script> alert("You successfully deleted the account/s") </script>';}-->
 
 	<div id='search_container'>
 		Search Account:
-		<form action="<?=base_url().'index.php/administrator/search_accounts'?>" method='post'>
-			<input type='text' id='search_text' name='search_text' autofocus="autofocus" value="<?=($searchText != '' ? "$searchText" : '')?>" required/>
+		<form action='<?=base_url('index.php/administrator/search_accounts')?>' method='post'>
+			<input type='text' id='search_text' name='search_text' autofocus="autofocus" value='<?=($searchText != '' ? $searchText : '')?>' required/>
 			
 			<select id='category' name='category'>
 				<option value='username' <?=($searchCategory == 'username' ? "selected='selected'" : '')?>>Username</option>
@@ -19,10 +20,10 @@
 	</div>
 	
 	<div id='category_option_container'>
-		<form action="<?=base_url().'index.php/administrator/view_accounts'?>" method='post'>
+		<form action='<?=base_url('index.php/administrator/view_accounts')?>' method='post'>
 			Sort by:
-			<input type='hidden' id="hidden_search_text" name="hidden_search_text" value="<?=$searchText?>"/>
-			<input type='hidden' id="hidden_category" name="hidden_category" value="<?=$searchCategory?>"/>
+			<input type='hidden' id='hidden_search_text' name='hidden_search_text' value='<?=$searchText?>'/>
+			<input type='hidden' id='hidden_category' name='hidden_category' value='<?=$searchCategory?>'/>
 			
 			<select id='sort_category' name='sort_category' onchange='this.form.submit()'>
 				<option value='last_name' <?=($sortCategory == 'last_name' ? "selected='selected'" : '')?>>Last Name</option>
@@ -32,20 +33,21 @@
 				<option value='user_type' <?=($sortCategory == 'user_type' ? "selected='selected'" : '')?>>User Type</option>
 			</select>
 		</form>
-		<?=anchor('administrator/view_accounts/', "View All Accounts")?>
-		<!--Changelog: 2/5 -Added anchor to create_account() in view_accounts_view-->
-		<?=anchor('administrator/create_account', "Create Account")?>
+
+		<?=anchor('administrator/create_account', 'Create Account')?>
+		<?=anchor('administrator/view_accounts/', 'View All Accounts')?>
+		
 	</div>
 
 	<div id='search_result_container'>
-		<?php if($searchText != ''){ ?>
+		<?php if($searchText){ ?>
 			Found <?=$accountCount?> with <?=$searchCategory?> '<?=$searchText?>'.
 		<?php }else{ ?>
 			Found <?=$accountCount?> user accounts.
 		<?php } ?>
 		
 		<?php if($accountCount > 0) { ?>
-			<?=($accountCount > 10 ? $this->pagination->create_links() : '')?>
+			<?=$this->pagination->create_links()?>
 			
 			<table>
 				<thead>
@@ -71,7 +73,7 @@
 						<!-- Creates a checkbox which when checked, will be passed to the controller and model to delete the checked row. Value will vary depending on the account type (Employee/Student). -->
 						<!--Changelog: 2/5 -Used username as value instead.-->
 						<td><input type='checkbox' name='users[]' value="<?=$account->username?>"/></td>
-						<td><?=$i++ + $this->uri->segment(3)?></td>
+						<td><?=$i++ + $offset?></td>
 						<td><?=($account->employee_number != NULL ? $account->employee_number : "--")?>
 						</td>
 						<td><?=($account->student_number != NULL ? $account->student_number : "--")?>
@@ -81,15 +83,14 @@
 						<td><?=$account->first_name?></td>
 						<td><?=$account->middle_name?></td>
 						<td><?php
-								if($account->user_type == 'A'){
+								if($account->user_type == 'A')
 									echo "Administrator";
-								}else if($account->user_type == 'L'){
+								else if($account->user_type == 'L')
 									echo "Librarian";
-								}else if($account->user_type == 'F'){
+								else if($account->user_type == 'F')
 									echo "Faculty";
-								}else if($account->user_type == 'S'){
+								else if($account->user_type == 'S')
 									echo "Student";
-								}
 							?>
 						</td>
 						<td>
@@ -107,4 +108,5 @@
 			</table>
 		<?php } ?>
 	</div>
+
 <?=$this->load->view('includes/footer')?>

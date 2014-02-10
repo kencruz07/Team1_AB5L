@@ -13,17 +13,17 @@ class Administrator extends CI_Controller{
 	}
 
 	public function index(){
-		$data["title"] = "Administrator Home - ICS Library System";
-		$this->load->view("administrator_home_view", $data);
+		$data['title'] = 'Administrator Home - ICS Library System';
+		$this->load->view('administrator_home_view', $data);
 	}
 
 	public function view_accounts(){
-		$data["title"] = "View Accounts - ICS Library System";
+		$data['title'] = 'View Accounts - ICS Library System';
 		$this->load->library('pagination');
 		
 		//Gets the value of the hidden input tags if not NULL
 		$searchText = $this->input->post('hidden_search_text');
-		$searchCategory = str_replace(" ", "_", $this->input->post('hidden_category'));
+		$searchCategory = str_replace(' ', '_', $this->input->post('hidden_category'));
 		
 		//Checks if the user selected a particular sort order
 		$sortCategory = $this->input->post('sort_category') ? $this->input->post('sort_category') : 'last_name';
@@ -35,6 +35,7 @@ class Administrator extends CI_Controller{
 		$offset = $this->uri->segment(3) < 1 ? 0 : (($this->uri->segment(3)-1)*$itemsPerPage);
 
 		//Checks if the user specified specific search text and category
+		//Gets data depending on the user input
 		if($searchText && $searchCategory){
 			$accounts = $this->administrator_model->get_limited_search_accounts($searchCategory, $searchText, $sortCategory, $itemsPerPage, $offset);
 			$accountCount = $this->administrator_model->get_search_accounts_count($searchCategory, $searchText);
@@ -43,7 +44,7 @@ class Administrator extends CI_Controller{
 			$accountCount = $this->administrator_model->get_total_accounts();
 		}
 
-		if($accountCount > 0) $data["accounts"] = $accounts->result();
+		if($accountCount > 0) $data['accounts'] = $accounts->result();
 
 		//Configures pagination if the output count is greater than the items per page
 		if($accountCount > $itemsPerPage){
@@ -63,13 +64,13 @@ class Administrator extends CI_Controller{
 			$this->pagination->initialize($config);
 		}
 
-		$data["accountCount"] = $accountCount;
-		$data["offset"] = $offset;
-		$data["searchText"] = $searchText;
-		$data["searchCategory"] = str_replace("_", " ", $searchCategory);
-		$data["sortCategory"] = $sortCategory;
+		$data['accountCount'] = $accountCount;
+		$data['offset'] = $offset;
+		$data['searchText'] = $searchText;
+		$data['searchCategory'] = str_replace('_', ' ', $searchCategory);
+		$data['sortCategory'] = $sortCategory;
 		
-		$this->load->view("view_accounts_view", $data);		
+		$this->load->view('view_accounts_view', $data);		
 	}
 	/*
 		Changelog for delete_accounts()
@@ -97,7 +98,7 @@ class Administrator extends CI_Controller{
 	public function search_accounts(){
 		if( ! $this->input->post('submit')) redirect('administrator/view_accounts');
 		
-		$data["title"] = "Search Accounts Result - ICS Library System";
+		$data['title'] = 'Search Accounts Result - ICS Library System';
 		$this->load->library('pagination');
 		
 		//Gets the user input from the form
@@ -115,7 +116,7 @@ class Administrator extends CI_Controller{
 
 		$accountCount = $this->administrator_model->get_search_accounts_count($searchCategory, $searchText);
 		
-		if($accountCount > 0) $data["accounts"] = $this->administrator_model->get_limited_search_accounts($searchCategory, $searchText, $orderBasis, $itemsPerPage, $offset)->result();
+		if($accountCount > 0) $data['accounts'] = $this->administrator_model->get_limited_search_accounts($searchCategory, $searchText, $orderBasis, $itemsPerPage, $offset)->result();
 
 		//Configures pagination if the output count is greater than the items per page
 		if($accountCount > $itemsPerPage){
@@ -135,13 +136,13 @@ class Administrator extends CI_Controller{
 			$this->pagination->initialize($config);
 		}
 
-		$data["accountCount"] = $accountCount;
-		$data["offset"] = $offset;
-		$data["searchText"] = $searchText;
-		$data["searchCategory"] = str_replace("_", " ", $searchCategory);
-		$data["sortCategory"] = $orderBasis;
+		$data['accountCount'] = $accountCount;
+		$data['offset'] = $offset;
+		$data['searchText'] = $searchText;
+		$data['searchCategory'] = str_replace('_', ' ', $searchCategory);
+		$data['sortCategory'] = $orderBasis;
 		
-		$this->load->view("view_accounts_view", $data);
+		$this->load->view('view_accounts_view', $data);
 	}
 	
 	

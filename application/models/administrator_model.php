@@ -30,7 +30,14 @@ class Administrator_model extends CI_Model{
 	 */
 	public function get_all_limited_accounts($orderBasis, $limit, $offset)
 	{
-		return $this->db->query("SELECT * FROM users ORDER BY $orderBasis ASC LIMIT $limit OFFSET $offset");
+		$this->db->select(array('employee_number', 'student_number', 'username', 'last_name', 
+				 		 		'first_name', 'middle_name', 'user_type')
+						 )
+				 ->from('users')
+				 ->order_by($orderBasis, 'asc')
+				 ->limit($limit, $offset);
+		
+		return $this->db->get();
 	}
 
 	/**
@@ -42,17 +49,11 @@ class Administrator_model extends CI_Model{
 	 */
 	public function get_search_accounts_count($searchCategory, $searchText)
 	{
-		if($searchCategory == "username"){
-			return $this->db->query("SELECT username FROM users WHERE username='$searchText'")->num_rows();
-		}else if($searchCategory == "student_number"){
-			return $this->db->query("SELECT username FROM users WHERE student_number='$searchText'")->num_rows();
-		}else if($searchCategory == "employee_number"){
-			return $this->db->query("SELECT username FROM users WHERE employee_number='$searchText'")->num_rows();
-		}else if($searchCategory == "first_name"){
-			return $this->db->query("SELECT username FROM users WHERE first_name='$searchText'")->num_rows();
-		}else if($searchCategory == "last_name"){
-			return $this->db->query("SELECT username FROM users WHERE last_name='$searchText'")->num_rows();
-		}
+		$this->db->select('username')
+				 ->from('users')
+				 ->where($searchCategory, $searchText);
+
+		return $this->db->get()->num_rows();
 	}
 
 	/**
@@ -64,65 +65,15 @@ class Administrator_model extends CI_Model{
 	 */
 	public function get_limited_search_accounts($searchCategory, $searchText, $orderBasis, $limit, $offset)
 	{
-		$this->db->query("SELECT * FROM users ORDER BY $orderBasis ASC");
-
-		if($searchCategory == "username"){
-			return $this->db->query("SELECT * FROM users WHERE username='$searchText' LIMIT $limit OFFSET $offset");
-		}else if($searchCategory == "student_number"){
-			return $this->db->query("SELECT * FROM users WHERE student_number='$searchText' LIMIT $limit OFFSET $offset");
-		}else if($searchCategory == "employee_number"){
-			return $this->db->query("SELECT * FROM users WHERE employee_number='$searchText' LIMIT $limit OFFSET $offset");
-		}else if($searchCategory == "first_name"){
-			return $this->db->query("SELECT * FROM users WHERE first_name='$searchText'");
-		}else if($searchCategory == "last_name"){
-			return $this->db->query("SELECT * FROM users WHERE last_name='$searchText' LIMIT $limit OFFSET $offset");
-		}
-	}
-
-	/**
-	 * Gets all accounts based on search criteria sorted in specified order
-	 *
-	 * @access	public
-	 * @param	string, string, string
-	 * @return	array
-	 */
-	public function get_sorted_search_accounts($searchCategory, $searchText, $orderBasis)
-	{
-		if($searchCategory == "username"){
-			return $this->db->query("SELECT * FROM users WHERE username='$searchText' ORDER BY $orderBasis ASC");
-		}else if($searchCategory == "student_number"){
-			return $this->db->query("SELECT * FROM users WHERE student_number='$searchText' ORDER BY $orderBasis ASC");
-		}else if($searchCategory == "employee_number"){
-			return $this->db->query("SELECT * FROM users WHERE employee_number='$searchText' ORDER BY $orderBasis ASC");
-		}else if($searchCategory == "first_name"){
-			return $this->db->query("SELECT * FROM users WHERE first_name='$searchText' ORDER BY $orderBasis ASC");
-		}else if($searchCategory == "last_name"){
-			return $this->db->query("SELECT * FROM users WHERE last_name='$searchText' ORDER BY $orderBasis ASC");
-		}
-	}
-
-	/**
-	 * Gets limited number of accounts based on search criteria and offset sorted in specified order
-	 *
-	 * @access	public
-	 * @param	string, string, string, integer, integer
-	 * @return	array
-	 */
-	public function get_limited_sorted_search_accounts($searchCategory, $searchText, $orderBasis, $limit, $offset)
-	{
-		$this->db->query("SELECT * FROM users ORDER BY $orderBasis ASC");
-
-		if($searchCategory == "username"){
-			return $this->db->query("SELECT * FROM users WHERE username='$searchText' LIMIT $limit OFFSET $offset");
-		}else if($searchCategory == "student_number"){
-			return $this->db->query("SELECT * FROM users WHERE student_number='$searchText' LIMIT $limit OFFSET $offset");
-		}else if($searchCategory == "employee_number"){
-			return $this->db->query("SELECT * FROM users WHERE employee_number='$searchText' LIMIT $limit OFFSET $offset");
-		}else if($searchCategory == "first_name"){
-			return $this->db->query("SELECT * FROM users WHERE first_name='$searchText' LIMIT $limit OFFSET $offset");
-		}else if($searchCategory == "last_name"){
-			return $this->db->query("SELECT * FROM users WHERE last_name='$searchText' LIMIT $limit OFFSET $offset");
-		}
+		$this->db->select(array('employee_number', 'student_number', 'username', 'last_name', 
+				 		 		'first_name', 'middle_name', 'user_type')
+						 )
+				 ->from('users')
+				 ->where($searchCategory, $searchText)
+				 ->order_by($orderBasis, 'asc')
+				 ->limit($limit, $offset);
+		
+		return $this->db->get();
 	}
 	
 	/*
