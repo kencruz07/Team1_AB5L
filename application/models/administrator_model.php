@@ -132,15 +132,10 @@ class Administrator_model extends CI_Model{
 		return $query->result();
 	}
 	
-	/**
-	 * Retrieves user information from database
-	 *
-	 * @access	public
-	 * @param	id
-	 * @return	array
-	 */
+	//	ZKA MALABUYOC
 	public function get_existing_account($id){ // selects and returns user info with username = $uname
 		 //****MODIFIED CODE: Used ID instead of USERNAME
+		 //$userInfo = $this->db->query("SELECT * FROM users WHERE username = '$uname'");
 		 $userInfo = $this->db->query("SELECT * FROM users WHERE id = '$id'");
 
 		 foreach ($userInfo->result() as $item){
@@ -149,24 +144,29 @@ class Administrator_model extends CI_Model{
 		 }
 		 return $data;
 	}
+	
+	public function save_changes($employee_no, $stud_no, $last_name, $first_name, $middle_name, 
+		$user_type, $username, $password, $college_address, $email_address, $contact, $college, $degree){
 
-	/**
-	 * Save changes made by user into database
-	 *
-	 * @access	public
-	 * @param	query
-	 * @return	
-	 */
-	public function save_changes($employee_number, $student_number, $last_name, $first_name, $middle_name, $user_type, $username,
-			$password, $college_address, $email_address, $contact, $college, $degree)
-	{
+		//$username =  $this->db->query("SELECT username FROM users WHERE username='$username' ");
+		//$password =  $this->db->query("SELECT password FROM users WHERE password='$password' ");
 		
-		$this->db->query("UPDATE users SET employee_number = '$employee_number', 
-				student_number = '$student_number', last_name = '$last_name', first_name = '$first_name', 
-				middle_name = '$middle_name', user_type = '$user_type', username = '$username', 
-				password = '$password', college_address = '$college_address', email_address = '$email_address',
-				contact_number = '$contact', college = '$college', degree = '$degree'
+		//if($username->num_rows() == 0 && $password->num_rows() == 0){
+				$this->db->query("UPDATE users 
+				SET (last_name = '$last_name', first_name = '$first_name', 
+				middle_name = '$middle_name', user_type = '$user_type', username = '$username', password = '$password', 
+				college_address = '$college_address', email_address = '$email_address', contact_number = '$contact',
+				college = '$college', degree = '$degree')
 				WHERE username = '$username'");
+				/*WHERE (last_name = '$last_name', first_name = '$first_name', 
+				middle_name = '$middle_name', user_type = '$user_type', username = '$username', password = '$password', 
+				college_address = '$college_address', email_address = '$email_address', contact_number = '$contact',
+				college = '$college', degree = '$degree'");*/
+				/*return 1;
+			}
+			else 	return 0;*/
+
+
 	}
 	
 	/* Parameters:
@@ -179,17 +179,6 @@ class Administrator_model extends CI_Model{
 		$userCount = $this->db->query("SELECT * FROM users WHERE id='$id'")->num_rows();
 
 		return ($userCount == 1 ? true : false);
-	}
-
-	/**
-	 * Save changes made by user into database
-	 *
-	 * @access	public
-	 * @param	input
-	 * @return	array
-	 */
-	public function get_username($input){
-		return $this->db->query("SELECT username FROM users WHERE username = '$input'")->result();
 	}
 }
 
