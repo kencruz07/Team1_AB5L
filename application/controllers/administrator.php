@@ -204,24 +204,24 @@ class Administrator extends CI_Controller{
 		}
 	}
 	
-	//	ZKA MALABUYOC
 	public function edit_account(){
 		$data["title"]	= "Edit Account - ICS Library System";
 
-		// gets username of account to be edited through the URI
-		//$uname = $this->uri->segment(3);
-		
-		//****MODIFIED CODE: Used ID instead of USERNAME
+		//Retrieves id of account to be edited through the URI
 		$id = $this->uri->segment(3);
-
-		// PARAMETER: $uname
-		// array $data contains result of query from administrator_model
-		//$data['account'] = $this->administrator_model->get_existing_account($uname);
 		
 		$data['account'] = $this->administrator_model->get_existing_account($id);
 
 		$this->load->view("edit_accounts_view", $data);
 		
+	}
+
+	public function check_username(){
+		$input = $_POST['input'];
+		$this->load->model('administrator_model');
+		$result = $this->administrator_model->get_username($input);
+		if(!empty($result)) echo "true";
+		else echo "false";
 	}
 	
 	/**
@@ -247,11 +247,9 @@ class Administrator extends CI_Controller{
 		}
 	}
 	
-	//	ZKA MALABUYOC
 	public function save_account_changes(){
-		//$id = $_POST["id"];
-		//$employee_no = $_POST["employee_no"];
-		//$stud_no = $_POST["stud_no"];
+		$employee_number = $_POST["employee_no"];
+		$student_number = $_POST["stud_no"];
 		$last_name = $_POST["last_name"];
 		$first_name = $_POST["first_name"];
 		$middle_name = $_POST["middle_name"];
@@ -264,17 +262,14 @@ class Administrator extends CI_Controller{
 		$college = $_POST["college"];
 		$degree = $_POST["degree"];
 
-		$data['account'] = $this->administrator_model->save_changes($last_name, $first_name, $middle_name,
-			$user_type, $username, $password, $college_address, $email_address, $contact, $college, $degree);
+		/*CHANGES MADE:
+			-Calls SQL Syntax in controller, passed as parameter to model.
+		*/
+		$this->load->model('administrator_model');
+		$this->administrator_model->save_changes($employee_number, $student_number, $last_name, $first_name, $middle_name, $user_type, $username,
+			$password, $college_address, $email_address, $contact, $college, $degree);
 
-		/*if($data == 0){
-			echo '<script> alert("Username/password already exists!") </script>';
-		}
-		else{
-			echo '<script> alert("Changes saved!") </script>';
-	*/
-			$this->load->view("redirect_edit_account_view", $data);
-	//	}
+		$this->load->view("redirect_edit_account_view");
 	}
 	
 }
