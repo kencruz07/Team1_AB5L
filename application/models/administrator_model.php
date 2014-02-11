@@ -119,6 +119,13 @@ class Administrator_model extends CI_Model{
 			}
 	}
 	
+	/**
+	 * returns the data from database of a certain account
+	 *
+	 * @access	public
+	 * @param	none
+	 * @return	row on a database
+	 */	
 	public function get_profile($id){ //returns the profile of the chosen user
 		//****MODIFIED CODE: Used ID instead of USERNAME
 		$query=$this->db->query("SELECT * FROM users WHERE id='$id'");

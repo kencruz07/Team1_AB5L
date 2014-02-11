@@ -224,15 +224,25 @@ class Administrator extends CI_Controller{
 		
 	}
 	
-	public function view_user_profile($id){//function for viewing a user profile
+	/**
+	 * function for viewing a user profile
+	 *
+	 * @access	public
+	 * @param	int (id of user)
+	 * @return	none
+	 */	
+	public function view_user_profile($id){
 		//****MODIFIED CODE: Used ID instead of USERNAME
-		$this->load->model('administrator_model');	//load administrator model
-		if($this->administrator_model->user_exists($id)==1){//if user exists(assuming the admin messes up with the url)
+		
+		//return true if user exists
+		if($this->administrator_model->user_exists($id)){
 			$data['results']=$this->administrator_model->get_profile($id); //creates a data array that accepts the return value of getProfile
-																				// function of administrator model
-			$this->load->view('user_profile_view',$data); //load the user_profile view
+			
+			//load the user_profile view																	// function of administrator model
+			$this->load->view('user_profile_view',$data); 
 		}
-		else{										//if not found/does not exists
+		//if not found/does not exists
+		else{										
 			$this->load->view('not_found_view.html');
 		}
 	}
